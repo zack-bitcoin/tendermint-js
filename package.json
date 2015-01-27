@@ -1,0 +1,20 @@
+{
+    "name": "tendermint-js",
+    "description": "Tendermint javascript core",
+    "main": "index.js",
+    "scripts": {
+        "test": "node test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/tendermint/tendermint-js.git"
+    },
+    "keywords": [
+        "tendermint"
+    ],
+    "author": "Jae Kwon <jae@tendermint.com>",
+    "license": "(K)",
+    "dependencies": {
+        "varint": ""
+    }
+}
