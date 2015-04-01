@@ -1,6 +1,6 @@
 {
     "name": "tendermint-js",
-    "description": "Tendermint javascript core",
+    "description": "Tendermint javascript client core",
     "main": "index.js",
     "scripts": {
         "test": "node test.js"
