@@ -1,7 +1,7 @@
 var http = require("http");
 
 var remote = {
-   host: "localhost",
+   host: "188.166.55.222",
    port: 8081,
    path: "/",
 };
