@@ -32,13 +32,17 @@ function Request(method, params, callback) {
 	};
 	var req = http.request(options, function(res) {
 		var resData = "";
-		res.setEncoding("utf8");
+		//res.setEncoding("utf8");
 		res.on("data", function(chunk) {
 			resData += chunk;
 		});
 		res.on("end", function() {
 			var resJSON = JSON.parse(resData);
-			callback(resJSON);
+			if (resJSON.jsonrpc == "2.0") {
+				callback(resJSON.result, resJSON.error);
+			} else {
+				callback(null, "Response is not jsonrpc 2.0");
+			}
 		});
 	});
 	req.write(rpcRequest);
