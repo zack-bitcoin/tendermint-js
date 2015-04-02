@@ -1,4 +1,4 @@
-var http = require("http");
+var config = require("../config");
 
 var remote = {
    host: "188.166.55.222",
@@ -14,6 +14,14 @@ function SetRemote(newRemote) {
 // params:   An array of parameters
 // callback: function(status, data, error){}
 function Request(method, params, callback) {
+	if (config.IsNodeJs()) {
+		requestNode(method, params, callback);
+	} else {
+		requestBrowser(method, params, callback);
+	}
+}
+
+function requestNode(method, params, callback) {
 	var rpcRequest = JSON.stringify({
 		jsonrpc: "2.0",
 		method:  method,
@@ -30,7 +38,7 @@ function Request(method, params, callback) {
 			"Content-Length": rpcRequest.length,
 		},
 	};
-	var req = http.request(options, function(res) {
+	var req = require("http").request(options, function(res) {
 		var resData = "";
 		//res.setEncoding("utf8");
 		res.on("data", function(chunk) {
@@ -48,6 +56,28 @@ function Request(method, params, callback) {
 	req.write(rpcRequest);
 	req.end();
 }
+
+function requestBrowser(method, params, callback) {
+	var rpcRequest = JSON.stringify({
+		jsonrpc: "2.0",
+		method:  method,
+		params:  params,
+		id:      null,
+	});
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState === 4) {
+			var resJSON = JSON.parse(request.responseText);
+			if (resJSON.jsonrpc == "2.0") {
+				callback(resJSON.result, resJSON.error);
+			} else {
+				callback(null, "Response is not jsonrpc 2.0");
+			}
+        }
+    };
+    request.open('POST', "http://"+remote.host+":"+remote.port+remote.path, true);
+    request.send(rpcRequest);
+};
 
 module.exports = {
 	SetRemote: SetRemote,
