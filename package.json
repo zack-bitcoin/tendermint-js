@@ -1,24 +1,34 @@
 {
-    "name": "tendermint-js",
-    "description": "Tendermint javascript client core",
-    "main": "index.js",
-    "scripts": {
-        "test": "node test.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/tendermint/tendermint-js.git"
-    },
-    "keywords": [
-        "tendermint"
-    ],
-    "author": "Jae Kwon <jae@tendermint.com>",
-    "license": "(K)",
-    "dependencies": {
-        "varint": "",
-        "browserify": "^5.12.1",
-        "gulp": "^3.8.8",
-        "vinyl-source-stream": "^1.0.0",
-        "http-server": ""
-    }
+  "name": "tendermint-js",
+  "description": "Tendermint javascript client core",
+  "main": "index.js",
+  "scripts": {
+    "watch": "mkdir -p dist & watchify -dv -t babelify index.js -o build/bundle.js & http-server . -p 8000 > /dev/null",
+    "watch-test": "browserify test/index.js | testling"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tendermint/tendermint-js.git"
+  },
+  "keywords": [
+    "tendermint"
+  ],
+  "author": "Jae Kwon <jae@tendermint.com>",
+  "license": "(K)",
+  "dependencies": {
+    "varint": ""
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "devDependencies": {
+    "babelify": "^5.0.4",
+    "browserify": "^9.0.4",
+    "http-server": "^0.8.0",
+    "tape": "^3.5.0",
+    "testling": "^1.7.1",
+    "watchify": "^3.1.0"
+  }
 }
