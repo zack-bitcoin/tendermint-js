@@ -1,1 +1,3 @@
-python -m SimpleHTTPServer 8000
+first, `npm install`, then `npm run watch`
+
+go to `localhost:8000`
