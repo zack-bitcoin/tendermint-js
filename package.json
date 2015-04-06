@@ -24,6 +24,7 @@
     ]
   },
   "devDependencies": {
+    "vinyl-source-stream": "",
     "babelify": "^5.0.4",
     "browserify": "^9.0.4",
     "http-server": "^0.8.0",
