@@ -1,8 +1,7 @@
 var config = require("../config");
 
 var remote = {
-    host: "46.101.49.208", //purple anteater
-   // host: "188.166.55.222", //navy toad
+   host: "188.166.55.222",
    port: 8081,
    path: "/",
 };
