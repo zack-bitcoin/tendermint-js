@@ -1,0 +1,51 @@
+<html>
+<head>
+	<script src="build/bundle.js"></script>
+</head>
+<body>
+	<button id="next_node_button">Next node</button> </br>
+	delay in milliseconds <p id="delay"></p>
+	host <p id="host"></p>
+	status <p id="status"></p>
+	net_info <p id="net_info"></p>
+	<p id="blockchain"></p>
+	<p id="get_block"></p>
+	<p id="get_account"></p>
+	<p id="get_storage"></p>
+	<p id="call"></p>
+	list validators <p id="list_validators"></p>
+	<p id="dump_storage"></p>
+	<p id="broadcast_tx"></p>
+	list accounts <p id="list_accounts"></p>
+
+<script type="text/javascript">
+	var rpc = require("./rpc");
+	var config = require("./config");
+	var methods = [
+		"status",
+		"net_info",
+		"list_validators",
+		"list_accounts",
+	];
+	function request(remote, method) {
+		rpc.Request(remote, method, [], function(result, error) {
+			document.getElementById(method).innerHTML = JSON.stringify(result, null, 4);  
+		});
+	}
+	var remoteIdx = 0;
+	function refresh() {
+	        start = new Date().getTime();
+           	var remote = config.Remotes[remoteIdx%(config.Remotes.length)];
+		document.getElementById("host").innerHTML = remote.host;
+		methods.map(function(method){ request(remote, method); });
+	        end = new Date().getTime();
+	        document.getElementById("delay").innerHTML = end - start;
+	}
+	document.getElementById("next_node_button").onclick=function(){
+		methods.map(function(method){ document.getElementById(method).innerHTML = ""; });
+		remoteIdx+=1;
+	}
+	setInterval(refresh, 1000);
+</script>
+</body>
+</html>

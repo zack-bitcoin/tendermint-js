@@ -1,5 +1,5 @@
-function NewByteSlice( string ) {
-	console.log(string);
+function NewByteSlice(string) {
+  console.log(string);
 }
 
 exports.NewByteSlice = NewByteSlice
